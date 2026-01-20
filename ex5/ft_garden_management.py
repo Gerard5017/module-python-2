@@ -30,7 +30,7 @@ class GardenManager:
             print(f"Caught GardenError: {e}")
         finally:
             print("Closing watering system (cleanup)")
-    
+
     def check_plant_health(self, plant_name):
         if plant_name not in self.plants:
             raise GardenError(f"Plant '{plant_name}' not found in garden")
@@ -48,7 +48,7 @@ class GardenManager:
         if (sun > 12):
             raise ValueError(f"Sunlight hours {sun} is too high max 12")
         print(f"{plant_name}: healthy (water: {water}, sun: {sun})")
-    
+
 
 def test_garden_management():
     print("=== Garden Management System ===")
@@ -59,35 +59,35 @@ def test_garden_management():
         garden.add_plant("tomato", 5, 8)
     except ValueError as e:
         print(f"Error adding plant: {e}")
-    
+
     try:
         garden.add_plant("lettuce", 6, 6)
     except ValueError as e:
         print(f"Error adding plant: {e}")
-    
+
     try:
         garden.add_plant("", 5, 8)
     except ValueError as e:
         print(f"Error adding plant: {e}")
-    
+
     print("\nWatering plants...")
     try:
         garden.water_plants()
     except GardenError as e:
         print(f"Error watering: {e}")
-    
+
     print("\nChecking plant health...")
     try:
         garden.check_plant_health("tomato")
     except (ValueError, GardenError) as e:
         print(f"Error checking tomato: {e}")
-    
+
     garden.plants["lettuce"]["water"] = 15
     try:
         garden.check_plant_health("lettuce")
     except ValueError as e:
         print(f"Error checking lettuce: {e}")
-    
+
     print("\nTesting error recovery...")
     garden.water_tank = 5
     try:
@@ -95,7 +95,7 @@ def test_garden_management():
     except GardenError as e:
         print(f"Caught GardenError: {e}")
         print("System recovered and continuing...")
-    
+
     print("\nGarden management system test complete!")
 
 
