@@ -1,14 +1,19 @@
 def check_temperature(temp_str):
     """
-    Check the temperature
+    Check if the temperature is suitable for plants.
 
-    :param temp_str: The Ambiant temperature
+    Validates that the temperature is within the acceptable range
+    (0°C to 40°C) for plant growth. Handles invalid input gracefully.
+
+    :param temp_str: The ambient temperature as a string
+    :type temp_str: str
+    :return: None (prints result to console)
     """
     try:
         t = int(temp_str)
-        if (t > 40):
+        if t > 40:
             print(f"Error: {t}°C is too hot for plants (max 40°C)")
-        elif (t < 0):
+        elif t < 0:
             print(f"Error: {t}°C is too cold for plants (min 0°C)")
         else:
             print(f"Temperature {t}°C is perfect for plants!")
@@ -18,7 +23,12 @@ def check_temperature(temp_str):
 
 def test_temperature_input():
     """
-    Test the funtion check_temperature with different temperature
+    Test the check_temperature function with various inputs.
+
+    Tests the function with valid temperatures, invalid formats,
+    and out-of-range values to demonstrate error handling.
+
+    :return: None (prints test results to console)
     """
     t1 = "25"
     t2 = "abc"
@@ -36,4 +46,5 @@ def test_temperature_input():
     print("All tests completed - program didn't crash!")
 
 
-test_temperature_input()
+if __name__ == "__main__":
+    test_temperature_input()

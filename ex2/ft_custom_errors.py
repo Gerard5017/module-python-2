@@ -1,34 +1,85 @@
 class GardenError(Exception):
-    """Exception Who check WaterError and PlantError"""
+    """
+    Base exception class for garden-related errors.
+
+    This serves as the parent class for all garden-specific exceptions,
+    allowing for catching all garden errors with a single except clause.
+    """
+
     pass
 
 
 class WaterError(GardenError):
-    """Exception Who check the water level"""
+    """
+    Exception raised for water-related issues.
+
+    This exception is raised when there are problems with water levels
+    or water availability in the garden system.
+    """
+
     pass
 
 
 class PlantError(GardenError):
-    """Exception Who check the state of the plant"""
+    """
+    Exception raised for plant health issues.
+
+    This exception is raised when a plant is in poor condition
+    or experiencing health problems.
+    """
+
     pass
 
 
 def check_water(water_level):
-    """Verify the water level and relieve the exception if is void"""
+    """
+    Verify the water level in the tank.
+
+    Checks if there is sufficient water available and raises an
+    exception if the tank is empty.
+
+    :param water_level: Current water level status
+    :type water_level: str
+    :raises WaterError: If water level is 'void'
+    :return: None
+    """
     if water_level == "void":
         raise WaterError("Not enough water in the tank!")
     return
 
 
 def check_plant(plant_state):
-    """Verify the plant state and relieve the exception if is wilting"""
+    """
+    Verify the plant's health state.
+
+    Checks the condition of a plant and raises an exception
+    if the plant is wilting or unhealthy.
+
+    :param plant_state: Current state of the plant
+    :type plant_state: str
+    :raises PlantError: If plant state is 'wilting'
+    :return: None
+    """
     if plant_state == "wilting":
         raise PlantError("The plant is wilting!")
     return
 
 
 def check_garden(plant_state, water_level):
-    """Docstring for check_garden"""
+    """
+    Perform comprehensive checks on garden conditions.
+
+    Verifies both plant health and water availability,
+    raising appropriate exceptions for any issues found.
+
+    :param plant_state: Current state of the plant
+    :type plant_state: str
+    :param water_level: Current water level status
+    :type water_level: str
+    :raises PlantError: If plant state is 'wilting'
+    :raises WaterError: If water level is 'void'
+    :return: None
+    """
     if plant_state == "wilting":
         raise PlantError("The plant is wilting!")
     if water_level == "void":
@@ -37,6 +88,14 @@ def check_garden(plant_state, water_level):
 
 
 def ft_custom_errors():
+    """
+    Demonstrate custom exception handling for garden errors.
+
+    Tests all custom exception types and shows how they can be
+    caught individually or as a group using the base GardenError class.
+
+    :return: None (prints test results to console)
+    """
     print("=== Custom Garden Errors Demo ===\n")
     print("Testing PlantError...")
 
@@ -62,7 +121,9 @@ def ft_custom_errors():
         check_water("void")
     except GardenError as e:
         print(f"Caught a garden error: {e}\n")
+
     print("All custom error types work correctly!")
 
 
-ft_custom_errors()
+if __name__ == "__main__":
+    ft_custom_errors()

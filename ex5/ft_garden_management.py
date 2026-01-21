@@ -1,14 +1,56 @@
 class GardenError(Exception):
-    """Personalized exception for garden errors"""
+    """
+    Custom exception class for garden-related errors.
+
+    This exception is raised for garden-specific issues such as
+    insufficient water or plant not found errors.
+    """
+
     pass
 
 
 class GardenManager:
+    """
+    A comprehensive garden management system.
+
+    This class manages plants in a garden, tracking their water and
+    sunlight requirements, managing a water tank, and providing
+    functionality to add plants, water them, and check their health.
+
+    :ivar plants: Dictionary storing plant information
+    :type plants: dict
+    :ivar water_tank: Current water level in the tank
+    :type water_tank: int
+    """
+
     def __init__(self):
+        """
+        Initialize a new GardenManager instance.
+
+        Sets up an empty plant dictionary and initializes
+        the water tank to 100 units.
+        """
         self.plants = {}
         self.water_tank = 100
 
     def add_plant(self, name, water_level, sunlight_hours):
+        """
+        Add a new plant to the garden with validation.
+
+        Validates plant parameters and adds the plant to the garden
+        if all values are within acceptable ranges.
+
+        :param name: Name of the plant
+        :type name: str
+        :param water_level: Required water level (1-10)
+        :type water_level: int or float
+        :param sunlight_hours: Required daily sunlight (2-12 hours)
+        :type sunlight_hours: int or float
+        :raises ValueError: If name is empty
+        :raises ValueError: If water_level is not between 1 and 10
+        :raises ValueError: If sunlight_hours is not between 2 and 12
+        :return: None (prints success message)
+        """
         if not name or name == "":
             raise ValueError("Plant name cannot be empty!")
         if water_level < 1 or water_level > 10:
@@ -19,6 +61,16 @@ class GardenManager:
         print(f"Added {name} successfully")
 
     def water_plants(self):
+        """
+        Water all plants in the garden with proper resource management.
+
+        Attempts to water each plant, checking if sufficient water
+        is available in the tank. Uses a finally block to ensure
+        the watering system is properly closed.
+
+        :raises GardenError: If water tank has less than 10 units
+        :return: None (prints watering status)
+        """
         try:
             print("Opening watering system")
             for name in self.plants:
@@ -32,29 +84,57 @@ class GardenManager:
             print("Closing watering system (cleanup)")
 
     def check_plant_health(self, plant_name):
+        """
+        Check the health status of a specific plant.
+
+        Validates that the plant exists and that its water and
+        sunlight parameters are within healthy ranges.
+
+        :param plant_name: Name of the plant to check
+        :type plant_name: str
+        :raises GardenError: If plant is not found in the garden
+        :raises ValueError: If plant_name is empty
+        :raises ValueError: If water level is not between 1 and 10
+        :raises ValueError: If sunlight hours is not between 2 and 12
+        :return: None (prints health status)
+        """
         if plant_name not in self.plants:
             raise GardenError(f"Plant '{plant_name}' not found in garden")
+
         plant = self.plants[plant_name]
         water = plant["water"]
         sun = plant["sun"]
-        if (not plant_name or plant_name == ""):
+
+        if not plant_name or plant_name == "":
             raise ValueError("Plant name cannot be empty!")
-        if (water < 1):
+        if water < 1:
             raise ValueError(f"Water level {water} is too low min 1")
-        if (water > 10):
+        if water > 10:
             raise ValueError(f"Water level {water} is too high max 10")
-        if (sun < 2):
+        if sun < 2:
             raise ValueError(f"Sunlight hours {sun} is too low min 2")
-        if (sun > 12):
+        if sun > 12:
             raise ValueError(f"Sunlight hours {sun} is too high max 12")
+
         print(f"{plant_name}: healthy (water: {water}, sun: {sun})")
 
 
 def test_garden_management():
+    """
+    Test the complete garden management system.
+
+    Demonstrates all features of the GardenManager class including:
+    - Adding plants with validation
+    - Watering plants with resource management
+    - Checking plant health
+    - Error handling and recovery
+
+    :return: None (prints test results to console)
+    """
     print("=== Garden Management System ===")
     garden = GardenManager()
-    print("\nAdding plants to garden...")
 
+    print("\nAdding plants to garden...")
     try:
         garden.add_plant("tomato", 5, 8)
     except ValueError as e:
@@ -99,4 +179,5 @@ def test_garden_management():
     print("\nGarden management system test complete!")
 
 
-test_garden_management()
+if __name__ == "__main__":
+    test_garden_management()
