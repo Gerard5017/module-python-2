@@ -45,7 +45,7 @@ class GardenManager():
     :type water_tank: int
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize a new GardenManager instance.
 
@@ -55,7 +55,8 @@ class GardenManager():
         self.plants = {}
         self.water_tank = 100
 
-    def add_plant(self, name, water_level, sunlight_hours):
+    def add_plant(self, name: str, water_level: int,
+                  sunlight_hours: int) -> None:
         """
         Add a new plant to the garden with validation.
 
@@ -82,7 +83,7 @@ class GardenManager():
         self.plants[name] = {"water": water_level, "sun": sunlight_hours}
         print(f"Added {name} successfully")
 
-    def water_plants(self):
+    def water_plants(self) -> None:
         """
         Water all plants in the garden with proper resource management.
 
@@ -105,7 +106,7 @@ class GardenManager():
         finally:
             print("Closing watering system (cleanup)")
 
-    def check_plant_health(self, plant_name):
+    def check_plant_health(self, plant_name: str) -> None:
         """
         Check the health status of a specific plant.
 
@@ -137,7 +138,7 @@ class GardenManager():
         print(f"{plant_name}: healthy (water: {water}, sun: {sun})")
 
 
-def test_garden_management():
+def test_garden_management() -> None:
     """
     Test the complete garden management system.
 
