@@ -1,15 +1,37 @@
 class GardenError(Exception):
     """
-    Custom exception class for garden-related errors.
+    Base exception class for garden-related errors.
 
-    This exception is raised for garden-specific issues such as
-    insufficient water or plant not found errors.
+    This serves as the parent class for all garden-specific exceptions,
+    allowing for catching all garden errors with a single except clause.
     """
 
     pass
 
 
-class GardenManager:
+class WaterError(GardenError):
+    """
+    Exception raised for water-related issues.
+
+    This exception is raised when there are problems with water levels
+    or water availability in the garden system.
+    """
+
+    pass
+
+
+class PlantError(GardenError):
+    """
+    Exception raised for plant health issues.
+
+    This exception is raised when a plant is in poor condition
+    or experiencing health problems.
+    """
+
+    pass
+
+
+class GardenManager():
     """
     A comprehensive garden management system.
 
@@ -52,11 +74,11 @@ class GardenManager:
         :return: None (prints success message)
         """
         if not name or name == "":
-            raise ValueError("Plant name cannot be empty!")
+            raise GardenError("Plant name cannot be empty!")
         if water_level < 1 or water_level > 10:
-            raise ValueError("Water level must be between 1 and 10")
+            raise WaterError("Water level must be between 1 and 10")
         if sunlight_hours < 2 or sunlight_hours > 12:
-            raise ValueError("Sunlight hours must be between 2 and 12")
+            raise PlantError("Sunlight hours must be between 2 and 12")
         self.plants[name] = {"water": water_level, "sun": sunlight_hours}
         print(f"Added {name} successfully")
 
@@ -75,11 +97,11 @@ class GardenManager:
             print("Opening watering system")
             for name in self.plants:
                 if self.water_tank < 10:
-                    raise GardenError("Not enough water in tank")
+                    raise WaterError("Not enough water in tank")
                 print(f"Watering {name} - success")
                 self.water_tank -= 10
         except GardenError as e:
-            print(f"Caught GardenError: {e}")
+            print(f"Caught WaterError: {e}")
         finally:
             print("Closing watering system (cleanup)")
 
@@ -106,15 +128,11 @@ class GardenManager:
         sun = plant["sun"]
 
         if not plant_name or plant_name == "":
-            raise ValueError("Plant name cannot be empty!")
-        if water < 1:
-            raise ValueError(f"Water level {water} is too low min 1")
-        if water > 10:
-            raise ValueError(f"Water level {water} is too high max 10")
-        if sun < 2:
-            raise ValueError(f"Sunlight hours {sun} is too low min 2")
-        if sun > 12:
-            raise ValueError(f"Sunlight hours {sun} is too high max 12")
+            raise GardenError("Plant name cannot be empty!")
+        if water < 1 or water > 10:
+            raise WaterError(f"Water level {water} must be between 1 and 10")
+        if sun < 2 or sun > 12:
+            raise PlantError(f"Sunlight hours {sun} must be between 2 and 12")
 
         print(f"{plant_name}: healthy (water: {water}, sun: {sun})")
 
@@ -137,17 +155,17 @@ def test_garden_management():
     print("\nAdding plants to garden...")
     try:
         garden.add_plant("tomato", 5, 8)
-    except ValueError as e:
+    except GardenError as e:
         print(f"Error adding plant: {e}")
 
     try:
         garden.add_plant("lettuce", 6, 6)
-    except ValueError as e:
+    except GardenError as e:
         print(f"Error adding plant: {e}")
 
     try:
         garden.add_plant("", 5, 8)
-    except ValueError as e:
+    except GardenError as e:
         print(f"Error adding plant: {e}")
 
     print("\nWatering plants...")
@@ -159,17 +177,17 @@ def test_garden_management():
     print("\nChecking plant health...")
     try:
         garden.check_plant_health("tomato")
-    except (ValueError, GardenError) as e:
+    except GardenError as e:
         print(f"Error checking tomato: {e}")
 
     garden.plants["lettuce"]["water"] = 15
     try:
         garden.check_plant_health("lettuce")
-    except ValueError as e:
+    except GardenError as e:
         print(f"Error checking lettuce: {e}")
 
     print("\nTesting error recovery...")
-    garden.water_tank = 5
+    garden.water_tank = 15
     try:
         garden.water_plants()
     except GardenError as e:

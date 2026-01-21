@@ -1,4 +1,4 @@
-def garden_operations(error_type):
+def garden_operations(error_type: str) -> None:
     """
     Generate different types of errors for demonstration purposes.
 
@@ -26,7 +26,7 @@ def garden_operations(error_type):
         plant["missing"]
 
 
-def test_error_types():
+def test_error_types() -> None:
     """
     Test the garden_operations function with different error types.
 
@@ -34,7 +34,7 @@ def test_error_types():
     using try-except blocks. Shows that the program continues running
     even after exceptions are caught.
 
-    :return: None (prints test results to console)
+    :return: None
     """
     print("=== Garden Error Types Demo ===")
     print("Testing ValueError...")

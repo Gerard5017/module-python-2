@@ -31,7 +31,7 @@ class PlantError(GardenError):
     pass
 
 
-def check_water(water_level):
+def check_water(water_level: str) -> None:
     """
     Verify the water level in the tank.
 
@@ -48,7 +48,7 @@ def check_water(water_level):
     return
 
 
-def check_plant(plant_state):
+def check_plant(plant_state: str) -> None:
     """
     Verify the plant's health state.
 
@@ -65,7 +65,7 @@ def check_plant(plant_state):
     return
 
 
-def check_garden(plant_state, water_level):
+def check_garden(plant_state: str, water_level: str) -> None:
     """
     Perform comprehensive checks on garden conditions.
 
@@ -87,7 +87,7 @@ def check_garden(plant_state, water_level):
     return
 
 
-def ft_custom_errors():
+def ft_custom_errors() -> None:
     """
     Demonstrate custom exception handling for garden errors.
 

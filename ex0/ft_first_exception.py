@@ -1,4 +1,4 @@
-def check_temperature(temp_str):
+def check_temperature(temp_str: str) -> str:
     """
     Check if the temperature is suitable for plants.
 
@@ -7,7 +7,7 @@ def check_temperature(temp_str):
 
     :param temp_str: The ambient temperature as a string
     :type temp_str: str
-    :return: None (prints result to console)
+    :return: t: str
     """
     try:
         t = int(temp_str)
@@ -17,11 +17,13 @@ def check_temperature(temp_str):
             print(f"Error: {t}°C is too cold for plants (min 0°C)")
         else:
             print(f"Temperature {t}°C is perfect for plants!")
+        return t
     except ValueError:
         print(f"Error: '{temp_str}' is not a valid number")
+        return
 
 
-def test_temperature_input():
+def test_temperature_input() -> None:
     """
     Test the check_temperature function with various inputs.
 

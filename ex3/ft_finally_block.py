@@ -1,4 +1,4 @@
-def water_plants(plant_list):
+def water_plants(plant_list: list) -> None:
     """
     Water a list of plants with proper resource cleanup.
 
@@ -22,7 +22,7 @@ def water_plants(plant_list):
         print("Closing watering system (cleanup)\n")
 
 
-def test_watering_system():
+def test_watering_system() -> None:
     """
     Test the watering system with valid and invalid plant lists.
 
