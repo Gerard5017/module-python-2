@@ -31,6 +31,7 @@ def test_watering_system() -> None:
 
     :return: None (prints test results to console)
     """
+    print("=== Garden Security System ===")
     valid_lst = ["Tomato", "Apple", "Monstera"]
     invalid_lst = ["Tomato", None, "Orchid"]
 
